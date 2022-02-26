@@ -1,1 +1,27 @@
-<p>list-users works!</p>
+<div class="container">
+    <h1 class="text-center">List of Users</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-3 m-3">
+        <div *ngFor="let user of users | paginate: { itemsPerPage: 3, currentPage: p , totalItems: users.length}">
+            <div class="card  border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">{{user.title}}</div>
+                <div class="card-body">
+                    <h4 class="card-title">id: {{user.id}}</h4>
+                    <p class="card-text">description: {{user.body}} </p>
+                    <div class="row row-cols-md-3">
+                        <div class="col-4">
+                            <button class="btn btn-danger" type="button" (click)="deleteUser(user.id)">Delete</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-info" [routerLink]="['/user/', user.id, 'edit']">Edit</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-secondary" [routerLink]="['/user/', user.id, 'view']">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
