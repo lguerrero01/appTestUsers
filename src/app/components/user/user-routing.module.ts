@@ -1,3 +1,4 @@
+import { DatatableComponent } from './../../shared/components/datatable/datatable.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
