@@ -65,7 +65,7 @@ export class EditUserComponent implements OnInit {
         this.router.navigateByUrl('/user');
       },
       (err) => {
-        this.toastr.error('Error to Edit', err);
+        this.toastr.error('Error', `${err}`);
       }
     );
   }
