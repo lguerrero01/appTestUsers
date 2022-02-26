@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/interfaces/user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-user',
@@ -23,7 +24,8 @@ export class EditUserComponent implements OnInit {
   constructor(
     public userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -57,13 +59,14 @@ export class EditUserComponent implements OnInit {
   }
 
   public editUser() {
-    console.log(this.formUser.value);
-
-    this.userService
-      .updateUser(this.id, this.formUser.value)
-      .subscribe((res) => {
-        console.log('User updated successfully!');
+    this.userService.updateUser(this.id, this.formUser.value).subscribe(
+      (res) => {
+        this.toastr.success('User edited', 'Succes');
         this.router.navigateByUrl('/user');
-      });
+      },
+      (err) => {
+        this.toastr.error('Error to Edit', err);
+      }
+    );
   }
 }
