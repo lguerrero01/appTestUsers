@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="text-center">List of Users</h1>
     <div class="row row-cols-1 row-cols-md-3 g-3 m-3">
-        <div *ngFor="let user of users | paginate: { itemsPerPage: 3, currentPage: p , totalItems: users.length}">
+        <div *ngFor="let user of users | paginate: { itemsPerPage: 6, currentPage: p , totalItems: users.length}">
             <div class="card  border-primary mb-3" style="max-width: 20rem;">
                 <div class="card-header">{{user.title}}</div>
                 <div class="card-body">
