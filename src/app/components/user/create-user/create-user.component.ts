@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -24,7 +25,8 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private userServices: UserService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class CreateUserComponent implements OnInit {
     this.userServices.createUser(this.formUser.value).subscribe((res) => {
       console.log('User created successfully!');
       this.router.navigateByUrl('user');
+      this.toastr.success('Added User', 'Succes');
     });
   }
 }

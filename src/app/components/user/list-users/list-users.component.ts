@@ -1,6 +1,7 @@
 import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/interfaces/user';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-users',
@@ -13,7 +14,10 @@ export class ListUsersComponent implements OnInit {
   /////////////
   public p: number = 1;
   public users: User[] = [];
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.userService.getAllUsers.subscribe((data: User[]) => {
@@ -25,6 +29,7 @@ export class ListUsersComponent implements OnInit {
     this.userService.deleteUser(id).subscribe((res) => {
       this.users = this.users.filter((item) => item.id !== id);
       console.log('User deleted successfully!');
+      this.toastr.success('User Deleted', 'Success');
     });
   }
 }
