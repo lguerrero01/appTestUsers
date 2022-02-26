@@ -1,0 +1,15 @@
+<div class="container mt-5" style="min-height: 100vh;">
+    <a class="btn btn-dark" href="#" routerLink="/user">Back</a>
+    <div class="card" >
+        <div class="card-body">
+            <h4 class="card-title">{{user.title}}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Description:</h6>
+            <p class="card-text">{{user.body}}</p>
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-info" [routerLink]="['/user/', user.id, 'edit']">Edit</button>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
