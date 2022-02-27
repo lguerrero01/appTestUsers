@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 /////////////
 // Interfaces
 ////////////
@@ -13,6 +13,8 @@ export class UserService {
   /////////////
   // Atributes
   ////////////
+
+  public newUser$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   private apiURL = 'https://jsonplaceholder.typicode.com';
 
   public httpOptions = {
@@ -43,13 +45,20 @@ export class UserService {
   }
 
   public updateUser(id: number, user: User): Observable<User> {
+   if (this.newUser$.getValue().length != 0) {
+     
+     let updateEmploye: any; 
+     updateEmploye = this.newUser$.getValue();
+     updateEmploye[id] = user; 
+     this.newUser$.next(updateEmploye);
+   }
     return this.httpClient.put<User>(
       `${this.apiURL}/posts/${id}`,
       JSON.stringify(user),
       this.httpOptions
     );
   }
-  
+
   public deleteUser(id: number) {
     return this.httpClient.delete<User>(
       `${this.apiURL}/posts/${id}`,

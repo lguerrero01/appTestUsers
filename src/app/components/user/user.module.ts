@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../shared/components/spinner/spinner.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CreateUserComponent,
     EditUserComponent,
     ViewUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,

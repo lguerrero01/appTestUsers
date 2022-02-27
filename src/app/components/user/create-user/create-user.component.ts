@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/shared/interfaces/user';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -17,6 +18,8 @@ export class CreateUserComponent implements OnInit {
   /////////////
   // Atributes
   ////////////
+  public loading: boolean = false;
+  user$ = this.userServices.newUser$;
   public formUser: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     body: new FormControl('', Validators.required),
@@ -44,11 +47,14 @@ export class CreateUserComponent implements OnInit {
   }
 
   public createUser() {
-    console.log(this.formUser.value);
-    this.userServices.createUser(this.formUser.value).subscribe((res) => {
-      console.log('User created successfully!');
-      this.router.navigateByUrl('user');
+    this.userServices.createUser(this.formUser.value).subscribe((res: User) => {
+      this.userServices.newUser$.next([...this.user$.getValue(), res]);
       this.toastr.success('Added User', 'Succes');
+
+      this.loading = true;
+      setTimeout(() => {
+        this.router.navigateByUrl('user');
+      }, 1000);
     });
   }
 }

@@ -2,6 +2,7 @@ import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/interfaces/user';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-users',
@@ -12,6 +13,8 @@ export class ListUsersComponent implements OnInit {
   //////////////
   //Atributes
   /////////////
+  public newData: any;
+  public subscription!: Subscription;
   public p: number = 1;
   public users: User[] = [];
   constructor(
@@ -20,9 +23,14 @@ export class ListUsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getAllUsers.subscribe((data: User[]) => {
-      this.users = data;
-    });
+    this.userService.getAllUsers.subscribe(
+      (data: User[]) => {
+        this.users = [...this.userService.newUser$.getValue(), ...data];
+      },
+      (err) => {
+        this.toastr.error('Reintente mas tarde ', 'error al cargar Users');
+      }
+    );
   }
 
   public deleteUser(id: number) {

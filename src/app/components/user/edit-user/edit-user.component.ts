@@ -33,6 +33,9 @@ export class EditUserComponent implements OnInit {
     this.userService.findUser(this.id).subscribe((data: User) => {
       this.user = data;
       this.fillField();
+    },
+    (err) => {
+      this.toastr.error('Error', 'User not found in Api');
     });
 
     this.formUser = new FormGroup({
@@ -65,7 +68,7 @@ export class EditUserComponent implements OnInit {
         this.router.navigateByUrl('/user');
       },
       (err) => {
-        this.toastr.error('Error', `${err}`);
+        this.toastr.error('Error');
       }
     );
   }
